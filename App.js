@@ -1,22 +1,47 @@
-import React, {useEffect, useState} from 'react'
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import React, {useEffect, useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  StatusBar,
+  Button,
+} from 'react-native';
 import firebase from './src/utils/firebase';
-import "firebase/auth"
+import 'firebase/auth';
+import Auth from './src/components/Auth';
 
 export default function App() {
-  const [user, setUSer] = useState(undefined)
+  const [user, setUSer] = useState(undefined);
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((response)=>
-     setUSer(response)
-    )
-  }, [])
+    firebase.auth().onAuthStateChanged((response) => setUSer(response));
+  }, []);
 
-  if(user === undefined) return null;
+  if (user === undefined) return null;
   return (
-    <SafeAreaView>
-      {user ? <Text>Estas logeeado</Text> : <Text>No estas loggeado</Text>}
-    </SafeAreaView>
-  )
+    <>
+      <StatusBar barStyle="light-content" />
+      <SafeAreaView style={styles.background}>
+        {user ? <Logout/> : <Auth />}
+      </SafeAreaView>
+    </>
+  );
 }
 
-const styles = StyleSheet.create({})
+function Logout() {
+  const logout = () => {
+    firebase.auth().signOut();
+  }
+  return (
+    <View>
+      <Button title={'Cerrar Sesion'} onPress={logout}/>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: '#15212b',
+    height: '100%',
+  },
+});
