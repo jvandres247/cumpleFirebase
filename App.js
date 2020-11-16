@@ -10,6 +10,7 @@ import {
 import firebase from './src/utils/firebase';
 import 'firebase/auth';
 import Auth from './src/components/Auth';
+import ListBirthday from './src/components/ListBirthday';
 
 export default function App() {
   const [user, setUSer] = useState(undefined);
@@ -22,7 +23,7 @@ export default function App() {
     <>
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.background}>
-        {user ? <Logout/> : <Auth />}
+        {user ? <ListBirthday/> : <Auth />}
       </SafeAreaView>
     </>
   );
