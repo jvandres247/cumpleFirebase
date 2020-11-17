@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 30,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   viewClose: {
     backgroundColor: '#820000',

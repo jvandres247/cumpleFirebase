@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {decode, encode} from 'base-64';
 import {
   StyleSheet,
   Text,
@@ -6,11 +7,16 @@ import {
   SafeAreaView,
   StatusBar,
   Button,
+  LogBox
 } from 'react-native';
 import firebase from './src/utils/firebase';
 import 'firebase/auth';
 import Auth from './src/components/Auth';
 import ListBirthday from './src/components/ListBirthday';
+
+if(!global.btoa) global.btoa = encode;
+if(!global.atob) global.atob = decode;
+LogBox.ignoreLogs(["Setting a timer for a long period"])
 
 export default function App() {
   const [user, setUSer] = useState(undefined);
@@ -23,20 +29,9 @@ export default function App() {
     <>
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.background}>
-        {user ? <ListBirthday/> : <Auth />}
+        {user ? <ListBirthday user={user}/> : <Auth />}
       </SafeAreaView>
     </>
-  );
-}
-
-function Logout() {
-  const logout = () => {
-    firebase.auth().signOut();
-  }
-  return (
-    <View>
-      <Button title={'Cerrar Sesion'} onPress={logout}/>
-    </View>
   );
 }
 
